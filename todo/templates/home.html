@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo Djnago APP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style>
+        .list-group-item{
+            border-radius: 5px;
+            background: #625B99;
+            color: white;
+            border-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center">
+        <div class="container">
+            <h1>ToDo Django App</h1>
+        </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="container mt-5">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control mr-2" id="title" name="title" aria-label="" aria-describedby="basic-addon1" placeholder="Enter your task here">
+                <button class="btn btn-primary btnlg" type="submit">Add Task</button>
+            </div>
+        </div>
+    </form>
+    <div class="container">
+        <ul class="list-group">
+            {% for i in data %}
+            <li class="list-group-item list-group-item-primary mt-2">
+                {% if i.complete %} 
+                <strike>{{i.title}}</strike>
+                {% elif i.complete != 'True' %} 
+                {{i.title}}
+                {% endif %}
+                <a href="{% url 'Delete' i.id %}">
+                    <button type="button" class="btn btn-danger float-right mr-2">Delete</button>
+                </a>
+                {% if i.complete %} 
+                <a href="{% url 'InComplete' i.id %}">
+                    <button type="button" class="btn btn-success float-right mr-2">Completed</button>
+                </a>
+                {% elif i.complete != 'True' %}
+                <a href="{% url 'Complete' i.id %}">
+                    <button type="button" class="btn btn-success float-right mr-2">Complete</button>
+                </a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
